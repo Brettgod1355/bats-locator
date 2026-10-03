@@ -39,7 +39,7 @@ import net.runelite.api.Client;
 import net.runelite.api.GameObject;
 import net.runelite.api.GameState;
 import net.runelite.api.GraphicsObject;
-import net.runelite.api.Varbits;
+import net.runelite.api.gameval.VarbitID;
 import net.runelite.api.coords.WorldPoint;
 import net.runelite.api.events.GameObjectSpawned;
 import net.runelite.api.events.GameTick;
@@ -118,7 +118,10 @@ public class BatsLocatorPlugin extends Plugin
 	@Subscribe
 	public void onVarbitChanged(VarbitChanged event)
 	{
-		checkRaidPresence(false);
+		if (event.getVarbitId() == VarbitID.RAIDS_CLIENT_INDUNGEON)
+		{
+			checkRaidPresence(false);
+		}
 	}
 
 	@Subscribe
@@ -168,7 +171,7 @@ public class BatsLocatorPlugin extends Plugin
 			return;
 		}
 
-		boolean setting = client.getVar(Varbits.IN_RAID) == 1;
+		boolean setting = client.getVarbitValue(VarbitID.RAIDS_CLIENT_INDUNGEON) == 1;
 
 		if (force || inRaidChambers != setting)
 		{

@@ -88,7 +88,7 @@ public class BatsOverlay extends Overlay
 
 					if (chestLocal != null)
 					{
-						Point chestCanvas = Perspective.localToCanvas(client, chestLocal, client.getPlane());
+						Point chestCanvas = Perspective.localToCanvas(client, chestLocal, client.getTopLevelWorldView().getPlane());
 
 						if (chestCanvas != null)
 						{
