@@ -34,17 +34,19 @@ import lombok.Getter;
 import net.runelite.api.Client;
 import static net.runelite.api.Constants.CHUNK_SIZE;
 import net.runelite.api.GameObject;
-import net.runelite.api.ObjectID;
+import net.runelite.api.gameval.ObjectID;
+import net.runelite.api.gameval.SpotanimID;
 import net.runelite.api.coords.WorldPoint;
 
 public class BatsLocator
 {
-	static final int TROUGH = ObjectID.TROUGH_29746;
-	static final int CLOSED = ObjectID.CHEST_29742;
-	static final int OPENED_POISON_OR_BATS = ObjectID.CHEST_29743;
-	static final int OPENED_WITHOUT_GRUBS = ObjectID.CHEST_29744;
-	static final int OPENED_WITH_GRUBS = ObjectID.CHEST_29745;
-	static final int POISON_SPLAT = 184;
+	static final int TROUGH = ObjectID.RAIDS_THIEVINGCHEST_FOODTROUGH_EMPTY;
+	static final int CLOSED = ObjectID.RAIDS_THIEVINGCHEST_CLOSED;
+	static final int OPENED_POISON_OR_BATS = ObjectID.RAIDS_THIEVINGCHEST_OPEN;
+	static final int OPENED_WITHOUT_GRUBS = ObjectID.RAIDS_THIEVINGCHEST_EGGS_WHOLE;
+	static final int OPENED_WITH_GRUBS = ObjectID.RAIDS_THIEVINGCHEST_EGGS_HATCHED;
+	//Graphics object spawned on a chest that was opened and contained poison (id 184).
+	static final int POISON_SPLAT = SpotanimID.SHILOMIST;
 
 	@Getter
 	private RoomType roomType;
@@ -82,7 +84,7 @@ public class BatsLocator
 			int plane = trough.getPlane();
 			int chunkX = trough.getLocalLocation().getSceneX() / CHUNK_SIZE;
 			int chunkY = trough.getLocalLocation().getSceneY() / CHUNK_SIZE;
-			int chunkData = client.getInstanceTemplateChunks()[plane][chunkX][chunkY];
+			int chunkData = trough.getWorldView().getInstanceTemplateChunks()[plane][chunkX][chunkY];
 			int instanceX = (chunkData >> 14 & 0x3FF) * CHUNK_SIZE;
 			rotation = chunkData >> 1 & 0x3;
 			switch (instanceX)
